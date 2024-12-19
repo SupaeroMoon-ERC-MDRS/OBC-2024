@@ -1,0 +1,3 @@
+[submodule "COM-2024-udpcanlib"]
+	path = COM-2024-udpcanlib
+	url = https://github.com/SupaeroMoon-ERC-MDRS/COM-2024-udpcanlib
