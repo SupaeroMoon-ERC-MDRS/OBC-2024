@@ -1,0 +1,47 @@
+version: "3.8"
+
+volumes:
+  workspace:
+
+services:
+  rasp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rasp
+    platform: linux/arm64
+    networks:
+      obc_network:
+        aliases:
+          - rasp
+    volumes:
+      - workspace:/workspace
+      - ${HOME}/.bash_history:/home/vscode/.bash_history
+    tty: true
+    ports:
+      - "8080:8080"
+
+  jetson:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jetson
+    platform: linux/arm64
+    networks:
+      obc_network:
+        aliases:
+          - jetson
+    volumes:
+      - workspace:/workspace
+      - ${HOME}/.bash_history:/home/vscode/.bash_history
+    tty: true
+    ports:
+      - "9090:9090"
+
+networks:
+  obc_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
